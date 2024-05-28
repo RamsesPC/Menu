@@ -1,14 +1,12 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import {
-  TouchableOpacity,
-  DrawerLayoutAndroid,
   Text,
   StyleSheet,
   View,
   TextInput,
   Button,
+  Image,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Acercade from './screens/Acercade';
@@ -48,6 +46,7 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Image source={require('./imagenes/logo.png')} style={styles.logo} />
       <Text style={styles.title}>Iniciar Sesión</Text>
       <TextInput
         style={styles.input}
@@ -67,51 +66,11 @@ const LoginScreen = ({ navigation }) => {
   );
 };
 
-const HomeScreen = ({ navigation }) => {
-  const drawer = useRef<DrawerLayoutAndroid>(null);
-  const [drawerPosition, setDrawerPosition] = useState<'left' | 'right'>('right');
-
-  const navigationView = () => (
-    <View style={[styles.container, styles.navigationContainer]}>
-      <TouchableOpacity
-        style={styles.drawerButton}
-        onPress={() => navigation.navigate('Artistas')}
-      >
-        <Text style={styles.drawerButtonText}>Artistas</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.drawerButton}
-        onPress={() => navigation.navigate('Compradores')}
-      >
-        <Text style={styles.drawerButtonText}>Compradores</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.drawerButton}
-        onPress={() => navigation.navigate('Informacion')}
-      >
-        <Text style={styles.drawerButtonText}>¿Cómo funciona?</Text>
-      </TouchableOpacity>
-    </View>
-  );
-
+const HomeScreen = () => {
   return (
-    <DrawerLayoutAndroid
-      ref={drawer}
-      drawerWidth={300}
-      drawerPosition={drawerPosition}
-      renderNavigationView={navigationView}
-    >
-      <View>
-        <View style={styles.iconContainer}>
-          <Icon
-            name="menu"
-            size={40} // Tamaño del icono
-            color="#B76E79" // Color del icono cambiado a oro rosa
-            onPress={() => drawer.current?.openDrawer()}
-          />
-        </View>
-      </View>
-    </DrawerLayoutAndroid>
+    <View style={styles.container}>
+      <Image source={require('./imagenes/logo.png')} style={styles.logo} />
+    </View>    
   );
 };
 
@@ -122,29 +81,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 16,
   },
-  navigationContainer: {
-    backgroundColor: '#ecf0f1',
-  },
-  iconContainer: {
+  logo: {
     position: 'absolute',
     top: 16,
-    right: 16,
-  },
-  drawerButton: {
-    backgroundColor: '#B76E79', // Oro rosa
-    padding: 20,
-    marginVertical: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-  },
-  drawerButtonText: {
-    color: '#fff',
-    fontSize: 18,
+    left: 16,
+    width: 100,
+    height: 50,
+    resizeMode: 'contain',
   },
   title: {
     fontSize: 24,
     color: '#B76E79',
+    marginBottom: 20,
   },
   input: {
     width: '80%',

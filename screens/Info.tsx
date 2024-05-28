@@ -48,26 +48,33 @@ const Info = ({ navigation }) => {
         <TouchableOpacity style={styles.iconContainer} onPress={() => drawer.current?.openDrawer()}>
           <Icon name="menu" size={55} color="#B76E79" />
         </TouchableOpacity>
+        <View style={styles.container}>
+          <Image source={require('../imagenes/logo.png')} style={styles.logo} />
+        </View> 
+        <View style = {styles.title}>
+          <Text style={styles.textTitle}>¿Como funciona?</Text>
+        </View>
         <ScrollView contentContainerStyle={styles.container}>
           <Image source={require('../imagenes/header-image.png')} style={styles.headerImage} />
+          <Text style={styles.textSubTitle}>¿Como comprar?</Text>
           <View style={styles.imageRow}>
             <View style={styles.imageContainer}>
               <Image source={require('../imagenes/imagen1.png')} style={styles.image} />
-              <Text style={styles.description}>Descripción de la imagen 1</Text>
+              <Text style={styles.description}>Selecciona la obra</Text>
             </View>
             <View style={styles.imageContainer}>
               <Image source={require('../imagenes/imagen2.png')} style={styles.image} />
-              <Text style={styles.description}>Descripción de la imagen 2</Text>
+              <Text style={styles.description}>Elige método de pago</Text>
             </View>
           </View>
           <View style={styles.imageRow}>
             <View style={styles.imageContainer}>
               <Image source={require('../imagenes/imagen3.png')} style={styles.image} />
-              <Text style={styles.description}>Descripción de la imagen 3</Text>
+              <Text style={styles.description}>Envio nacional e internacional</Text>
             </View>
             <View style={styles.imageContainer}>
               <Image source={require('../imagenes/imagen4.png')} style={styles.image} />
-              <Text style={styles.description}>Descripción de la imagen 4</Text>
+              <Text style={styles.description}>Seleccion de artistas</Text>
             </View>
           </View>
         </ScrollView>
@@ -77,11 +84,32 @@ const Info = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  title: {
+    left:16,
+    top: 30,
+  },
+  textTitle: {
+    fontSize: 30,
+    color: '#E74C3B',
+  },
+  textSubTitle: {
+    left: -120,
+    fontSize: 20,
+    color: '#E74C3B',
+  },
   container: {
     flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 16,
+  },
+  logo: {
+    position: 'absolute',
+    top: 30,
+    left: 16,
+    width: 100,
+    height: 60,
+    resizeMode: 'contain',
   },
   navigationContainer: {
     backgroundColor: '#ecf0f1',
@@ -125,11 +153,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   image: {
+    top: 20,
     width: 100,
     height: 100,
     marginBottom: 5,
   },
   description: {
+    top: 20,
     fontSize: 16,
     color: '#333',
     textAlign: 'center',

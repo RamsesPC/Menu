@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 const Contacto = ({ navigation }) => {
   const drawer = useRef<DrawerLayoutAndroid>(null);
   const [drawerPosition, setDrawerPosition] = useState<'left' | 'right'>('right');
+  const [submenuVisible, setSubmenuVisible] = useState(false);
 
   const navigationView = () => (
     <View style={[styles.container, styles.navigationContainer]}>
@@ -28,10 +29,26 @@ const Contacto = ({ navigation }) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.drawerButton}
-        onPress={() => navigation.navigate('Informacion')}
+        onPress={() => setSubmenuVisible(!submenuVisible)}
       >
         <Text style={styles.drawerButtonText}>¿Cómo funciona?</Text>
       </TouchableOpacity>
+      {submenuVisible && (
+        <View style={styles.submenu}>
+          <TouchableOpacity
+            style={styles.submenuButton}
+            onPress={() => navigation.navigate('Artistas')}
+          >
+            <Text style={styles.drawerButtonText}>Artistas</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.submenuButton}
+            onPress={() => navigation.navigate('Informacion')}
+          >
+            <Text style={styles.drawerButtonText}>Compradores</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 
@@ -85,6 +102,19 @@ const styles = StyleSheet.create({
   drawerButtonText: {
     color: '#fff',
     fontSize: 18,
+  },
+  submenu: {
+    backgroundColor: '#ecf0f1',
+    paddingLeft: 40,
+    paddingRight: 10,
+    width: '100%',
+  },
+  submenuButton: {
+    backgroundColor: '#B76E79',
+    padding: 15,
+    marginVertical: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   gradient: {
     flex: 1,
