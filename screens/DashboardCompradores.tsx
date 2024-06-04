@@ -3,16 +3,16 @@ import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-nativ
 import axios from 'axios';
 import webserviceparams from '../webserviceparams';
 
-const DashboardArtistas = () => {
-  const [artistas, setArtistas] = useState([]);
+const DashboardCompradores = () => {
+  const [compradores, setCompradores] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const fetchArtistas = async () => {
+    const fetchCompradores = async () => {
       try {
-        const response = await axios.get(`http://${webserviceparams.host}:${webserviceparams.port}/artista`);
-        setArtistas(response.data);
+        const response = await axios.get(`http://${webserviceparams.host}:${webserviceparams.port}/comprador`);
+        setCompradores(response.data);
         setLoading(false);
       } catch (error) {
         console.error(error); // Log the error for debugging
@@ -21,14 +21,14 @@ const DashboardArtistas = () => {
       }
     };
 
-    fetchArtistas();
+    fetchCompradores();
   }, []);
 
-  const renderArtista = ({ item }) => (
-    <View style={styles.artistaContainer}>
-      <Text style={styles.artistaNombre}>Nombre: {item.nombre}</Text>
-      <Text style={styles.artistaBiografia}>Biografía: {item.biografia}</Text>
-      <Text style={styles.artistaObras}>Obras: {item.obras}</Text>
+  const renderComprador = ({ item }) => (
+    <View style={styles.compradorContainer}>
+      <Text style={styles.compradorNombre}>Nombre: {item.nombre}</Text>
+      <Text style={styles.compradorEmail}>Tecnica preferida: {item.biografia}</Text>
+      <Text style={styles.compradorTelefono}>Preferencias: {item.obras}</Text>
     </View>
   );
 
@@ -40,8 +40,8 @@ const DashboardArtistas = () => {
         <Text style={styles.error}>{error}</Text>
       ) : (
         <FlatList
-          data={artistas}
-          renderItem={renderArtista}
+          data={compradores}
+          renderItem={renderComprador}
           keyExtractor={(item) => item.id ? item.id.toString() : Math.random().toString()}
           contentContainerStyle={styles.list}
         />
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   list: {
     width: '100%',
   },
-  artistaContainer: {
+  compradorContainer: {
     backgroundColor: '#fff',
     padding: 20,
     marginVertical: 10,
@@ -72,17 +72,17 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
   },
-  artistaNombre: {
+  compradorNombre: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#B76E79', // Main color for text
   },
-  artistaBiografia: {
+  compradorEmail: {
     fontSize: 16,
     marginTop: 10,
     color: '#333', // Secondary color for text
   },
-  artistaObras: {
+  compradorTelefono: {
     fontSize: 16,
     marginTop: 10,
     color: '#333', // Secondary color for text
@@ -94,4 +94,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DashboardArtistas;
+export default DashboardCompradores;

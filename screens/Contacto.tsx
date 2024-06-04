@@ -12,7 +12,9 @@ const Contacto = ({ navigation }) => {
   const drawer = useRef<DrawerLayoutAndroid>(null);
   const [drawerPosition, setDrawerPosition] = useState<'left' | 'right'>('right');
   const [submenuVisible, setSubmenuVisible] = useState(false);
+  const [dashboardSubmenuVisible, setDashboardSubmenuVisible] = useState(false);
 
+  
   const navigationView = () => (
     <View style={[styles.container, styles.navigationContainer]}>
       <TouchableOpacity
@@ -44,6 +46,28 @@ const Contacto = ({ navigation }) => {
           <TouchableOpacity
             style={styles.submenuButton}
             onPress={() => navigation.navigate('Informacion')}
+          >
+            <Text style={styles.drawerButtonText}>Compradores</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+      <TouchableOpacity
+        style={styles.drawerButton}
+        onPress={() => setDashboardSubmenuVisible(!dashboardSubmenuVisible)}
+      >
+        <Text style={styles.drawerButtonText}>Dashboard</Text>
+      </TouchableOpacity>
+      {dashboardSubmenuVisible && (
+        <View style={styles.submenu}>
+          <TouchableOpacity
+            style={styles.submenuButton}
+            onPress={() => navigation.navigate('DashboardArtistas')}
+          >
+            <Text style={styles.drawerButtonText}>Artistas</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.submenuButton}
+            onPress={() => navigation.navigate('DashboardCompradores')}
           >
             <Text style={styles.drawerButtonText}>Compradores</Text>
           </TouchableOpacity>

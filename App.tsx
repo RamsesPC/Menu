@@ -16,6 +16,7 @@ import Inicio from './screens/inicio';
 import FormArtistas from './screens/FormArtistas';
 import FormCompradores from './screens/FormCompradores';
 import DashboardArtistas from './screens/DashboardArtistas';
+import DashboardCompradores from './screens/DashboardCompradores';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +32,7 @@ const App = () => {
         <Stack.Screen name="FormArtistas" component={FormArtistas} />
         <Stack.Screen name="FormCompradores" component={FormCompradores} />
         <Stack.Screen name="DashboardArtistas" component={DashboardArtistas} />
+        <Stack.Screen name="DashboardCompradores" component={DashboardCompradores} />
       </Stack.Navigator>
     </NavigationContainer>
   );

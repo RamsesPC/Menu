@@ -18,6 +18,7 @@ const FormArtista = ({ navigation }) => {
   const drawer = useRef<DrawerLayoutAndroid>(null);
   const [drawerPosition, setDrawerPosition] = useState<'left' | 'right'>('right');
   const [submenuVisible, setSubmenuVisible] = useState(false);
+  const [dashboardSubmenuVisible, setDashboardSubmenuVisible] = useState(false);
 
   const [nombre, setNombre] = useState('');
   const [biografia, setBiografia] = useState('');
@@ -87,6 +88,29 @@ const FormArtista = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       )}
+      <TouchableOpacity
+        style={styles.drawerButton}
+        onPress={() => setDashboardSubmenuVisible(!dashboardSubmenuVisible)}
+      >
+        <Text style={styles.drawerButtonText}>Dashboard</Text>
+      </TouchableOpacity>
+      {dashboardSubmenuVisible && (
+        <View style={styles.submenu}>
+          <TouchableOpacity
+            style={styles.submenuButton}
+            onPress={() => navigation.navigate('DashboardArtistas')}
+          >
+            <Text style={styles.drawerButtonText}>Artistas</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.submenuButton}
+            onPress={() => navigation.navigate('DashboardCompradores')}
+          >
+            <Text style={styles.drawerButtonText}>Compradores</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+      
     </View>
   );
 
