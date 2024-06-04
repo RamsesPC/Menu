@@ -17,15 +17,15 @@ const Contacto = ({ navigation }) => {
     <View style={[styles.container, styles.navigationContainer]}>
       <TouchableOpacity
         style={styles.drawerButton}
-        onPress={() => navigation.navigate('Artistas')}
+        onPress={() => navigation.navigate('FormArtistas')}
       >
-        <Text style={styles.drawerButtonText}>Artistas</Text>
+        <Text style={styles.drawerButtonText}>Formulario para artistas</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.drawerButton}
-        onPress={() => navigation.navigate('Compradores')}
+        onPress={() => navigation.navigate('FormCompradores')}
       >
-        <Text style={styles.drawerButtonText}>Compradores</Text>
+        <Text style={styles.drawerButtonText}>Formulario para compradores</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.drawerButton}

@@ -1,0 +1,36 @@
+# Aplicación de Compra y Venta de Obras de Arte
+
+¡Bienvenido a la aplicación móvil para comprar y vender obras de arte de una forma fácil y segura!
+
+## Descripción del Proyecto
+
+Esta aplicación permite a los usuarios registrar artistas y compradores, así como visualizar la información registrada en un panel de control. La aplicación está desarrollada con React Native y utiliza un servidor backend para almacenar y recuperar datos.
+
+## Funcionalidades
+
+- **Registro de Artistas**: Permite a los artistas registrarse proporcionando su nombre, biografía y obras.
+- **Registro de Compradores**: Permite a los compradores registrarse proporcionando su nombre, biografía y obras de interés.
+- **Dashboard de Artistas**: Visualiza la información de los artistas registrados.
+- **Dashboard de Compradores**: Visualiza la información de los compradores registrados.
+
+## Repositorio del Web Service del Backend
+
+El backend de esta aplicación está desarrollado en Node.js y utiliza Express para manejar las solicitudes HTTP. Puedes encontrar el código fuente del backend en el siguiente enlace:
+
+[Repositorio del Web Service del Backend](https://github.com/RamsesPC/Proyecto/)
+
+## Instalación y Configuración
+
+### Requisitos Previos
+
+- Node.js
+- npm
+- React Native CLI
+
+### Pasos para la Instalación
+
+1. **Clonar el Repositorio**
+
+   ```sh
+   git clone https://github.com/RamsesPC/Menu.git
+   npm run android

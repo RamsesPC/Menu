@@ -12,6 +12,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Acercade from './screens/Acercade';
 import Contacto from './screens/Contacto';
 import Info from './screens/Info';
+import Inicio from './screens/inicio';
+import FormArtistas from './screens/FormArtistas';
+import FormCompradores from './screens/FormCompradores';
+import DashboardArtistas from './screens/DashboardArtistas';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +27,10 @@ const App = () => {
         <Stack.Screen name="Artistas" component={Acercade} />
         <Stack.Screen name="Compradores" component={Contacto} />
         <Stack.Screen name="Informacion" component={Info} />
+        <Stack.Screen name="Inicio" component={Inicio} />
+        <Stack.Screen name="FormArtistas" component={FormArtistas} />
+        <Stack.Screen name="FormCompradores" component={FormCompradores} />
+        <Stack.Screen name="DashboardArtistas" component={DashboardArtistas} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -38,7 +46,7 @@ const LoginScreen = ({ navigation }) => {
     const validPassword = 'contraseña';
 
     if (username === validUsername && password === validPassword) {
-      navigation.navigate('Artistas');
+      navigation.navigate('Inicio');
     } else {
       alert('Credenciales incorrectas');
     }

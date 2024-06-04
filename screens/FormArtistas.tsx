@@ -5,15 +5,51 @@ import {
   Text,
   StyleSheet,
   View,
-  Image,
   ScrollView,
+  Image,
+  TextInput,
+  Button,
 } from 'react-native';
+import axios from 'axios';
+import webserviceparams from '../webserviceparams';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const Acercade = ({ navigation }) => {
+const FormArtista = ({ navigation }) => {
   const drawer = useRef<DrawerLayoutAndroid>(null);
   const [drawerPosition, setDrawerPosition] = useState<'left' | 'right'>('right');
   const [submenuVisible, setSubmenuVisible] = useState(false);
+
+  const [nombre, setNombre] = useState('');
+  const [biografia, setBiografia] = useState('');
+  const [obras, setObras] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  const handleSubmit = async () => {
+    setError('');
+    setSuccess('');
+
+    const data = {
+      nombre,
+      biografia,
+      obras
+    };
+
+    try {
+      const response = await axios.post(`http://${webserviceparams.host}:${webserviceparams.port}/artista`, data);
+
+      if (response.status >= 200 && response.status < 300) {
+        setSuccess('Datos enviados exitosamente.');
+        setNombre('');
+        setBiografia('');
+        setObras('');
+      } else {
+        setError('Error al enviar los datos.');
+      }
+    } catch (error) {
+      setError('Error de conexión con el servidor.');
+    }
+  };
 
   const navigationView = () => (
     <View style={[styles.container, styles.navigationContainer]}>
@@ -65,20 +101,42 @@ const Acercade = ({ navigation }) => {
         <TouchableOpacity style={styles.iconContainer} onPress={() => drawer.current?.openDrawer()}>
           <Icon name="menu" size={55} color="#B76E79" />
         </TouchableOpacity>
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <TouchableOpacity style={styles.logoContainer} onPress={() => navigation.navigate('Inicio')}>
           <Image source={require('../imagenes/logo.png')} style={styles.logo} />
+        </TouchableOpacity>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
           <Image source={require('../imagenes/header-image.png')} style={styles.headerImage} />
-          <Text style={styles.text}>Información para artistas o proveedores</Text>
-          <Text style={styles.requisitosTitle}>Requisitos indispensables para ser un artista en nuestro sitio web</Text>
-          <Text style={styles.requisitosText}>
-            1. Nombre del artista{'\n'}
-            2. Curriculum Vitae{'\n'}
-            3. Declaración del artista: qué haces, cómo y por qué{'\n'}
-            4. Fotografía del artista en alta resolución{'\n'}
-            5. Razón social{'\n'}
-            6. RFC{'\n'}
-            7. INE "indispensables"
-          </Text>
+          <Text style={styles.formTitle}>Formulario de Artistas</Text>
+          <View style={styles.form}>
+            <Text style={styles.label}>Nombre:</Text>
+            <TextInput
+              style={styles.input}
+              value={nombre}
+              onChangeText={setNombre}
+              placeholder="Nombre"
+            />
+            <Text style={styles.label}>Biografía:</Text>
+            <TextInput
+              style={[styles.input, styles.textArea]}
+              value={biografia}
+              onChangeText={setBiografia}
+              placeholder="Biografía"
+              multiline={true}
+              numberOfLines={4}
+            />
+            <Text style={styles.label}>Obras:</Text>
+            <TextInput
+              style={[styles.input, styles.textArea]}
+              value={obras}
+              onChangeText={setObras}
+              placeholder="Obras"
+              multiline={true}
+              numberOfLines={4}
+            />
+            {error && <Text style={styles.error}>{error}</Text>}
+            {success && <Text style={styles.success}>{success}</Text>}
+            <Button title="Enviar" onPress={handleSubmit} color="#B76E79" />
+          </View>
         </ScrollView>
       </View>
     </DrawerLayoutAndroid>
@@ -96,6 +154,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     paddingTop: 100, // Adjust padding top to make room for the logo and icon
+  },
+  logoContainer: {
+    position: 'absolute',
+    top: 16,
+    left: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5, // Add elevation for Android
+  },
+  logo: {
+    width: 100,
+    height: 50,
+    resizeMode: 'contain',
+  },
+  headerImage: {
+    marginTop: 70, // Ensure the header image is positioned correctly
+    width: '100%',
+    height: 200,
+    resizeMode: 'cover',
+    marginVertical: 20,
   },
   navigationContainer: {
     backgroundColor: '#ecf0f1',
@@ -120,8 +200,8 @@ const styles = StyleSheet.create({
   },
   submenu: {
     backgroundColor: '#ecf0f1',
-    paddingLeft: 15,
-    paddingRight: 15,
+    paddingLeft: 40,
+    paddingRight: 10,
     width: '100%',
   },
   submenuButton: {
@@ -130,46 +210,52 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    width: '100%',
   },
   gradient: {
     flex: 1,
     backgroundColor: '#ffc3a0', // Simulate a gradient background
   },
-  logo: {
-    width: 100,
-    height: 50,
-    resizeMode: 'contain',
-    position: 'absolute',
-    top: 16,
-    left: 16,
-  },
-  headerImage: {
-    marginTop: 30, // Ensure the header image is positioned correctly
-    width: '100%',
-    height: 200,
-    resizeMode: 'cover',
-    marginVertical: 20,
-  },
-  text: {
+  formTitle: {
     fontSize: 24,
     color: '#B76E79',
     marginBottom: 20,
-    textAlign: 'center',
   },
-  requisitosTitle: {
-    fontSize: 20,
-    color: '#B76E79',
-    marginBottom: 10,
-    textAlign: 'center',
+  form: {
+    width: '100%',
+    padding: 20,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 5,
   },
-  requisitosText: {
+  label: {
     fontSize: 16,
     color: '#333',
-    textAlign: 'left',
-    width: '100%',
-    margin: 3,
+    marginBottom: 10,
+  },
+  input: {
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    marginBottom: 20,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+  textArea: {
+    height: 80,
+    textAlignVertical: 'top',
+  },
+  error: {
+    color: 'red',
+    marginBottom: 10,
+  },
+  success: {
+    color: 'green',
+    marginBottom: 10,
   },
 });
 
-export default Acercade;
+export default FormArtista;

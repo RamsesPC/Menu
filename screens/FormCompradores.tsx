@@ -5,15 +5,28 @@ import {
   Text,
   StyleSheet,
   View,
-  Image,
   ScrollView,
+  Image,
+  TextInput,
+  Button,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const Info = ({ navigation }) => {
+const FormCompradores = ({ navigation }) => {
   const drawer = useRef<DrawerLayoutAndroid>(null);
   const [drawerPosition, setDrawerPosition] = useState<'left' | 'right'>('right');
   const [submenuVisible, setSubmenuVisible] = useState(false);
+
+  const [nombre, setNombre] = useState('');
+  const [biografia, setBiografia] = useState('');
+  const [obras, setObras] = useState('');
+
+  const handleSubmit = () => {
+    // Manejar el envío del formulario aquí
+    console.log('Nombre:', nombre);
+    console.log('Biografia:', biografia);
+    console.log('Obras:', obras);
+  };
 
   const navigationView = () => (
     <View style={[styles.container, styles.navigationContainer]}>
@@ -65,34 +78,36 @@ const Info = ({ navigation }) => {
         <TouchableOpacity style={styles.iconContainer} onPress={() => drawer.current?.openDrawer()}>
           <Icon name="menu" size={55} color="#B76E79" />
         </TouchableOpacity>
-        <View style={styles.container}>
+        <TouchableOpacity style={styles.logoContainer} onPress={() => navigation.navigate('Inicio')}>
           <Image source={require('../imagenes/logo.png')} style={styles.logo} />
-        </View> 
-        <View style = {styles.title}>
-          <Text style={styles.textTitle}>¿Como funciona?</Text>
-        </View>
-        <ScrollView contentContainerStyle={styles.container}>
+        </TouchableOpacity>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
           <Image source={require('../imagenes/header-image.png')} style={styles.headerImage} />
-          <Text style={styles.textSubTitle}>¿Como comprar?</Text>
-          <View style={styles.imageRow}>
-            <View style={styles.imageContainer}>
-              <Image source={require('../imagenes/imagen1.png')} style={styles.image} />
-              <Text style={styles.description}>Selecciona la obra</Text>
-            </View>
-            <View style={styles.imageContainer}>
-              <Image source={require('../imagenes/imagen2.png')} style={styles.image} />
-              <Text style={styles.description}>Elige método de pago</Text>
-            </View>
-          </View>
-          <View style={styles.imageRow}>
-            <View style={styles.imageContainer}>
-              <Image source={require('../imagenes/imagen3.png')} style={styles.image} />
-              <Text style={styles.description}>Envio nacional e internacional</Text>
-            </View>
-            <View style={styles.imageContainer}>
-              <Image source={require('../imagenes/imagen4.png')} style={styles.image} />
-              <Text style={styles.description}>Seleccion de artistas</Text>
-            </View>
+          <Text style={styles.formTitle}>Formulario de Compradores</Text>
+          <View style={styles.form}>
+            <Text style={styles.label}>Nombre:</Text>
+            <TextInput
+              style={styles.input}
+              value={nombre}
+              onChangeText={setNombre}
+            />
+            <Text style={styles.label}>Tecnicas favoritas:</Text>
+            <TextInput
+              style={[styles.input, styles.textArea]}
+              value={biografia}
+              onChangeText={setBiografia}
+              multiline={true}
+              numberOfLines={4}
+            />
+            <Text style={styles.label}>Que espera encontrar en esta aplicación:</Text>
+            <TextInput
+              style={[styles.input, styles.textArea]}
+              value={obras}
+              onChangeText={setObras}
+              multiline={true}
+              numberOfLines={4}
+            />
+            <Button title="Enviar" onPress={handleSubmit} color="#B76E79" />
           </View>
         </ScrollView>
       </View>
@@ -101,32 +116,38 @@ const Info = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  title: {
-    left:16,
-    top: 30,
-  },
-  textTitle: {
-    fontSize: 30,
-    color: '#E74C3B',
-  },
-  textSubTitle: {
-    left: -120,
-    fontSize: 20,
-    color: '#E74C3B',
-  },
   container: {
-    flexGrow: 1,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 16,
   },
-  logo: {
+  scrollContainer: {
+    alignItems: 'center',
+    padding: 20,
+    paddingTop: 100, // Adjust padding top to make room for the logo and icon
+  },
+  logoContainer: {
     position: 'absolute',
-    top: 30,
+    top: 16,
     left: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5, // Add elevation for Android
+  },
+  logo: {
     width: 100,
-    height: 60,
+    height: 50,
     resizeMode: 'contain',
+  },
+  headerImage: {
+    marginTop: 70, // Ensure the header image is positioned correctly
+    width: '100%',
+    height: 200,
+    resizeMode: 'cover',
+    marginVertical: 20,
   },
   navigationContainer: {
     backgroundColor: '#ecf0f1',
@@ -135,22 +156,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 16,
     right: 16,
-    zIndex: 1, // Make sure the icon is on top
-    padding: 10,
-  },
-  submenu: {
-    backgroundColor: '#ecf0f1',
-    paddingLeft: 15,
-    paddingRight: 15,
-    width: '100%',
-  },
-  submenuButton: {
-    backgroundColor: '#B76E79',
-    padding: 15,
-    marginVertical: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
+    zIndex: 1, // Ensure the icon is on top
   },
   drawerButton: {
     backgroundColor: '#B76E79',
@@ -164,37 +170,56 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
   },
+  submenu: {
+    backgroundColor: '#ecf0f1',
+    paddingLeft: 40,
+    paddingRight: 10,
+    width: '100%',
+  },
+  submenuButton: {
+    backgroundColor: '#B76E79',
+    padding: 15,
+    marginVertical: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   gradient: {
     flex: 1,
     backgroundColor: '#ffc3a0', // Simulate a gradient background
   },
-  headerImage: {
+  formTitle: {
+    fontSize: 24,
+    color: '#B76E79',
+    marginBottom: 20,
+  },
+  form: {
     width: '100%',
-    height: 200,
-    marginBottom: 20,
+    padding: 20,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 5,
   },
-  imageRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 20,
-  },
-  imageContainer: {
-    alignItems: 'center',
-    flex: 1,
-    marginHorizontal: 10,
-  },
-  image: {
-    top: 20,
-    width: 100,
-    height: 100,
-    marginBottom: 5,
-  },
-  description: {
-    top: 20,
+  label: {
     fontSize: 16,
     color: '#333',
-    textAlign: 'center',
+    marginBottom: 10,
+  },
+  input: {
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    marginBottom: 20,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+  textArea: {
+    height: 80,
+    textAlignVertical: 'top',
   },
 });
 
-export default Info;
+export default FormCompradores;
